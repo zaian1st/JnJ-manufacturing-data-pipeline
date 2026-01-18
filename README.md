@@ -56,6 +56,17 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Run SQL Analysis 
+Executes 5 SQL queries to answer business questions:
+1. Total maintenance cost
+2. Total downtime minutes
+3. Maintenance events count
+4. Unplanned breakdowns count
+5. Average downtime per event
+```bash
+python sql/run_queries.py
+```
+
 ### Run ETL Pipeline
 
 Executes full pipeline: **Load → Clean → Transform → Export**
@@ -70,14 +81,7 @@ python src/pipeline.py
 * `data/processed/parquet/` - High-performance Parquet storage.
 * `data/processed/csv/fact_table.csv` - Business-ready CSV export.
 
-### Run SQL Analysis
 
-Executes SQL-based exploration to answer key maintenance and downtime questions:
-
-```powershell
-python sql/run_queries.py
-
-```
 
 ### Run Unit Tests & Coverage
 
@@ -96,6 +100,20 @@ pytest tests/ -v --cov=src
 1. **Bronze Layer**: Raw CSVs loaded with strict `StructType` schemas to ensure data type safety.
 2. **Silver Layer**: Deduplicated data using Window functions and standardized OEE calculations.
 3. **Gold Layer**: Fact table aggregated at the grain of **Date × Factory × Line × Shift**.
+## Architecture
+```
+CSV Files (Raw) 
+    ↓
+Bronze Layer (Loaded with explicit schemas)
+    ↓
+Silver Layer (Cleaned)
+    ↓
+Silver Layer (Transformed)
+    ↓
+Gold Layer (Fact table: aggregated by date/factory/line/shift)
+    ↓
+Output (Parquet + CSV)
+```
 
 ## Design Decisions & Engineering Rationale
 
@@ -138,6 +156,5 @@ Downtime is joined at the Line level. Since maintenance logs often lack shift-sp
 ---
 
 **Author:** Zaian
-
 **Date:** 18 January 2026
 
