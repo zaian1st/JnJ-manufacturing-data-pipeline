@@ -1,4 +1,4 @@
-# Explicit Schema Definitions
+
 
 from pyspark.sql.types import (
     StructType, StructField, StringType, IntegerType, 
@@ -78,6 +78,7 @@ FACT_TABLE_SCHEMA = StructType([
     StructField("total_scrap", IntegerType(), nullable=True),
     StructField("total_defects", IntegerType(), nullable=True),
     StructField("avg_oee", DoubleType(), nullable=True),
+    StructField("avg_oee_calculated", DoubleType(), nullable=True),
     StructField("min_oee", DoubleType(), nullable=True),
     StructField("max_oee", DoubleType(), nullable=True),
     StructField("avg_temperature_c", DoubleType(), nullable=True),

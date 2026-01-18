@@ -1,7 +1,7 @@
 # Task 3: Design Decisions & Assumptions
 
 ## Overview
-This document outlines the engineering choices made for the manufacturing data pipeline (Task 3). Each decision is based on production best practices, data characteristics discovered during profiling, and typical warehouse-scale requirements.
+This document outlines the engineering choices made for the manufacturing data pipeline. my decision is based on production best practices , data characteristics discovered during profiling, and typical warehouse-scale requirements.
 
 ---
 
@@ -110,6 +110,7 @@ Export
 4. **Update Strategy:** Full refresh (not incremental) for this assessment
 5. **Performance Target:** Pipeline completes in <5 minutes for current dataset
 6. **Scalability Target:** Linear scaling to 1TB+ datasets
+7. **Maintenance Attribution:** Maintenance events are joined by date/factory/line, not by shift. This means maintenance costs/downtime are distributed across all shifts on that day. For more granular attribution, shift-level mapping would require additional business logic to determine which shift the maintenance occurred during based on start_time.
 
 ---
 
@@ -138,10 +139,7 @@ Export
 
 ## References
 
-- Databricks Data Engineering Best Practices - Ebook
-- Manufacturing Analytics Standards (ISA-95) 
+- Databricks Data Engineering Best Practices
+- Manufacturing Analytics Standards (ISA-95)
 
 ---
-
-**Document Version:** 1.0  
-**Status:** Approved for Implementation
